@@ -1,82 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/site-config";
 
 export default function Preloader() {
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        // Disable scroll when loading
-        document.body.style.overflow = "hidden";
-
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-            document.body.style.overflow = "auto";
-        }, 1200);
-
-        return () => {
-            clearTimeout(timer);
-            document.body.style.overflow = "auto";
-        };
-    }, []);
-
-    return (
-        <AnimatePresence mode="wait">
-            {isLoading && (
-                <motion.div
-                    key="preloader"
-                    initial={{ opacity: 1 }}
-                    exit={{ y: "-100%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
-                    className="fixed inset-0 z-[9999] bg-[#F3F5F9] flex items-center justify-center"
-                >
-                    <div className="flex flex-col items-center">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-                            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                            transition={{ duration: 1, ease: "backOut" }}
-                            className="mb-8 relative"
-                        >
-                            <img src={siteConfig.images.logo} alt="Logo" className="w-32 h-32 md:w-48 md:h-48 object-contain" />
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="text-center relative z-10 px-4"
-                        >
-                            <motion.h1
-                                initial={{ y: "100%" }}
-                                animate={{ y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.2, ease: "circOut" }}
-                                className="text-3xl md:text-5xl font-bold mb-2 overflow-hidden block tracking-wide"
-                                style={{ color: siteConfig.theme.colors.primary }}
-                            >
-                                {siteConfig.name}
-                            </motion.h1>
-                            <motion.p
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: 0.6 }}
-                                className="text-xs md:text-lg font-bold tracking-widest uppercase"
-                                style={{ color: siteConfig.theme.colors.primary }}
-                            >
-                                {siteConfig.subtitle}
-                            </motion.p>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "100px" }}
-                            transition={{ duration: 1, delay: 0.5, ease: "easeInOut" }}
-                            className="h-1 rounded-full mt-6"
-                            style={{ background: "linear-gradient(90deg, #09E0A7 0%, #0DC6FF 100%)" }}
-                        />
-                    </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed inset-0 z-50 bg-secondary flex items-center justify-center"
+    >
+      <div className="text-center">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center mb-6 mx-auto"
+        >
+          <span className="text-3xl font-bold text-secondary">
+            {siteConfig.name.charAt(0)}
+          </span>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <h2 className="text-xl font-bold text-white mb-1">{siteConfig.name}</h2>
+          <p className="text-gray-400 text-sm">{siteConfig.subtitle}</p>
+        </motion.div>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="mt-6 w-48 h-1 bg-gray-700 rounded-full mx-auto overflow-hidden"
+        >
+          <div className="h-full bg-primary rounded-full" />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
 }

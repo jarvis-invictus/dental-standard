@@ -1,67 +1,68 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Users, HeartPulse, Pill, type LucideIcon } from "lucide-react";
-import SplitText from "./SplitText";
+import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
 
-const iconMap: Record<string, LucideIcon> = {
-    "Users": Users,
-    "HeartPulse": HeartPulse,
-    "Pill": Pill
-};
-
 export default function Features() {
-    return (
-        <section className="py-20 bg-gray-50">
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    {/* Left: Image/Design */}
-                    <div className="hidden lg:block relative">
-                        <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white h-[500px] border border-gray-100 group">
-                            <img
-                                src={siteConfig.images.features}
-                                alt="Smile Dental Clinic team"
-                                className="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Right: Content */}
-                    <div>
-                        <span className="text-primary font-bold tracking-widest uppercase text-sm mb-2 block">{siteConfig.features.title}</span>
-                        <h2 className="text-4xl font-bold text-secondary mb-8">
-                            <SplitText delay={0.2}>{siteConfig.features.headingLine1}</SplitText> <span style={{ color: "#09E0A7" }}><SplitText delay={0.5}>{siteConfig.features.headingLine2}</SplitText></span>
-                        </h2>
-                        <p className="text-gray-600 mb-10">
-                            {siteConfig.features.description}
-                        </p>
-
-                        <div className="space-y-8">
-                            {siteConfig.features.items.map((feature, idx) => {
-                                const IconComponent = iconMap[feature.icon] || Users;
-                                return (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, x: 20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: idx * 0.2, duration: 0.5 }}
-                                        className="flex gap-4 group"
-                                    >
-                                        <div className="w-16 h-16 shrink-0 rounded-full border border-gray-100 flex items-center justify-center text-secondary bg-white shadow-sm">
-                                            <IconComponent className="w-8 h-8 stroke-1" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold text-secondary mb-2 font-serif">{feature.title}</h3>
-                                            <p className="text-gray-500 text-sm max-w-xs">{feature.desc}</p>
-                                        </div>
-                                    </motion.div>
-                                )
-                            })}
-                        </div>
-                    </div>
-                </div>
+  return (
+    <section id="features" className="py-20 lg:py-28 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative"
+          >
+            <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl">
+              <Image
+                src={siteConfig.images.features}
+                alt="Modern dental equipment at Smile Dental Clinic"
+                fill
+                className="object-cover"
+              />
             </div>
-        </section>
-    );
+          </motion.div>
+
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            <span className="inline-block px-4 py-2 bg-primary/10 text-secondary font-medium rounded-full text-sm">
+              {siteConfig.features.title}
+            </span>
+
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-secondary">
+              {siteConfig.features.headingLine1}
+              <br />
+              <span className="text-primary">{siteConfig.features.headingLine2}</span>
+            </h2>
+
+            <p className="text-lg text-gray-600">
+              {siteConfig.features.description}
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-6 pt-4">
+              {siteConfig.features.items.map((item, index) => (
+                <div key={index} className="text-center sm:text-left">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 mx-auto sm:mx-0">
+                    <span className="text-2xl">{item.icon === "Users" ? "👥" : item.icon === "HeartPulse" ? "❤️" : "💊"}</span>
+                  </div>
+                  <h3 className="font-bold text-secondary mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 }

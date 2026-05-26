@@ -1,116 +1,133 @@
 "use client";
 
-import { Star } from "lucide-react";
-import { siteConfig } from "@/lib/site-config";
+import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { useState, useEffect, useCallback } from "react";
-
-function StarRating({ rating }: { rating: number }) {
-    return (
-        <div className="flex gap-0.5">
-            {Array.from({ length: 5 }).map((_, i) => (
-                <svg
-                    key={i}
-                    className={`w-4 h-4 ${i < rating ? "text-yellow-400" : "text-gray-200"}`}
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-            ))}
-        </div>
-    );
-}
+import { siteConfig } from "@/lib/site-config";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Testimonials() {
-    const testimonials = siteConfig.testimonials.items;
-    const [emblaRef, emblaApi] = useEmblaCarousel(
-        { loop: true, align: "start", slidesToScroll: 1 },
-        [Autoplay({ delay: 5000, stopOnInteraction: false })]
-    );
-    const [selectedIndex, setSelectedIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 7000, stopOnInteraction: false }),
+  ]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const onSelect = useCallback(() => {
-        if (!emblaApi) return;
-        setSelectedIndex(emblaApi.selectedScrollSnap());
-    }, [emblaApi]);
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
 
-    useEffect(() => {
-        if (!emblaApi) return;
-        onSelect();
-        emblaApi.on("select", onSelect);
-        return () => {
-            emblaApi.off("select", onSelect);
-        };
-    }, [emblaApi, onSelect]);
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
 
-    const scrollTo = useCallback(
-        (index: number) => emblaApi && emblaApi.scrollTo(index),
-        [emblaApi]
-    );
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
-    return (
-        <section className="py-20 bg-gray-50">
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
-                    <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-4">
-                        Patient Stories
-                    </span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-                        What Our Patients Say
-                    </h2>
-                    <p className="text-gray-500 max-w-xl mx-auto">
-                        Real experiences from real patients who trust us with their smiles.
-                    </p>
-                </div>
+  return (
+    <section id="testimonials" className="py-20 lg:py-28 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <span className="inline-block px-4 py-2 bg-primary/10 text-secondary font-medium rounded-full text-sm mb-4">
+            {siteConfig.testimonials.label}
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-secondary">
+            {siteConfig.testimonials.headingLine1}
+            <br />
+            <span className="text-primary">{siteConfig.testimonials.headingLine2}</span>
+          </h2>
+          <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+            {siteConfig.testimonials.description}
+          </p>
+        </motion.div>
 
-                {/* Carousel */}
-                <div className="overflow-hidden max-w-6xl mx-auto" ref={emblaRef}>
-                    <div className="flex gap-6">
-                        {testimonials.map((item, idx) => (
-                            <div
-                                key={idx}
-                                className="flex-[0_0_100%] min-w-0 md:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)]"
-                            >
-                                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-4 hover:shadow-md transition-shadow h-full">
-                                    <StarRating rating={item.stars} />
-                                    <p className="text-gray-600 leading-relaxed text-sm flex-1">
-                                        &ldquo;{item.content}&rdquo;
-                                    </p>
-                                    <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                                        <img
-                                            src={item.image}
-                                            alt={item.name}
-                                            className="w-10 h-10 rounded-full object-cover"
-                                        />
-                                        <div>
-                                            <p className="text-sm font-semibold text-secondary">{item.name}</p>
-                                            <p className="text-xs text-gray-400">{item.role}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Dot Navigation */}
-                <div className="flex justify-center gap-2 mt-8">
-                    {testimonials.map((_, idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => scrollTo(idx)}
-                            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                                idx === selectedIndex
-                                    ? "bg-primary w-8"
-                                    : "bg-gray-300 hover:bg-gray-400"
-                            }`}
-                            aria-label={`Go to testimonial ${idx + 1}`}
+        <div className="relative">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {siteConfig.testimonials.items.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4"
+                >
+                  <div className="bg-white rounded-2xl p-6 h-full shadow-sm">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                        <Image
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          fill
+                          className="object-cover"
                         />
-                    ))}
+                      </div>
+                      <div>
+                        <div className="font-bold text-secondary">{testimonial.name}</div>
+                        <div className="text-sm text-gray-500">{testimonial.role}</div>
+                      </div>
+                    </div>
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(testimonial.stars)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      &ldquo;{testimonial.content}&rdquo;
+                    </p>
+                  </div>
                 </div>
+              ))}
             </div>
-        </section>
-    );
+          </div>
+
+          {/* Navigation */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={scrollPrev}
+              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="w-5 h-5 text-secondary" />
+            </button>
+
+            {/* Dots */}
+            <div className="flex gap-2">
+              {siteConfig.testimonials.items.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollTo(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === selectedIndex
+                      ? "bg-primary w-6"
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={scrollNext}
+              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-5 h-5 text-secondary" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

@@ -1,12 +1,11 @@
 import { Stethoscope, Smile, Sparkles, Anchor, Baby, Siren } from "lucide-react";
 
-export const services = [
+export const servicesData = [
     {
         icon: Stethoscope,
         title: "General Dentistry",
         slug: "general-dentistry",
-        image: "/images/cleaning.png",
-        svgSrc: "/images/services-svg/General Dentistry.svg",
+        image: "/images/services/cleaning.png",
         short: "Regular check-ups and professional cleanings to maintain your oral health. Digital X-rays, fillings, and preventive care.",
         description: "General dentistry covers everything needed to keep your mouth healthy — routine check-ups, professional cleanings, fillings, and early detection of issues like cavities and gum disease. Regular visits every 6 months prevent small problems from becoming costly ones.",
         why: [
@@ -20,8 +19,7 @@ export const services = [
         icon: Smile,
         title: "Orthodontics",
         slug: "orthodontics",
-        image: "/images/orthodontics.png",
-        svgSrc: "/images/services-svg/Orthodontics.svg",
+        image: "/images/services/braces.png",
         short: "Straighten your teeth and align your bite — your way. Metal, ceramic, or invisible aligners.",
         description: "Orthodontics corrects crooked teeth, gaps, crowding, and bite problems using braces or clear aligners. We offer traditional metal braces, ceramic braces, and Invisalign — all designed to give you a straight, confident smile.",
         why: [
@@ -35,8 +33,7 @@ export const services = [
         icon: Sparkles,
         title: "Cosmetic Dentistry",
         slug: "cosmetic-dentistry",
-        image: "/images/cosmetic-dentistry.png",
-        svgSrc: "/images/services-svg/Cosmetic Dentistry.svg",
+        image: "/images/services/cosmetic.png",
         short: "Enhance your smile with treatments tailored to boost your confidence. Veneers, bonding, and smile design.",
         description: "Cosmetic dentistry focuses on improving the appearance of your smile through teeth whitening, porcelain veneers, composite bonding, gum contouring, and smile designing. We use digital smile design to preview your results before treatment begins.",
         why: [
@@ -50,8 +47,7 @@ export const services = [
         icon: Anchor,
         title: "Dental Implants",
         slug: "dental-implants",
-        image: "/images/dental-implants.png",
-        svgSrc: "/images/services-svg/Dental Implants.svg",
+        image: "/images/services/implant.png",
         short: "Permanent teeth. Natural feel. Lifetime confidence. Swiss-made titanium implants.",
         description: "Dental implants are titanium posts surgically placed in the jawbone to replace missing tooth roots. A crown is attached on top, resulting in a permanent, natural-looking tooth replacement with no slipping or discomfort.",
         why: [
@@ -65,8 +61,7 @@ export const services = [
         icon: Baby,
         title: "Kids Dentistry",
         slug: "kids-dentistry",
-        image: "/images/pediatric.png",
-        svgSrc: "/images/services-svg/Pediatric Dentistry.svg",
+        image: "/images/services/pediatric.png",
         short: "Gentle, fun, and completely stress-free for your child. Child-friendly environment.",
         description: "Our child-friendly dental clinic is designed to make every visit fun and stress-free. We specialise in preventive care, pit and fissure sealants, fluoride treatments, and space maintainers for growing smiles.",
         why: [
@@ -80,8 +75,7 @@ export const services = [
         icon: Siren,
         title: "Emergency Dental Care",
         slug: "emergency-dental-care",
-        image: "/images/dental-implants.png",
-        svgSrc: "/images/services-svg/Emergency Care.svg",
+        image: "/images/services/root-canal.png",
         short: "Same-day appointments. Pain relief in 30 minutes. 24/7 WhatsApp triage.",
         description: "Dental emergencies — toothaches, broken teeth, knocked-out teeth, lost fillings — require immediate attention. We offer same-day emergency appointments and are available on WhatsApp for triage advice 24/7.",
         why: [

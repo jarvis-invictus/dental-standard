@@ -1,55 +1,84 @@
-import type { Metadata } from "next";
-import { Inter, Inter_Tight } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
-import MobileStickyBar from "@/components/MobileStickyBar";
-import ChatbotWidget from "@/components/ChatbotWidget";
-import SmoothScroll from "@/components/SmoothScroll";
+import { Inter, Inter_Tight } from "next/font/google";
 import { siteConfig } from "@/lib/site-config";
 
 const inter = Inter({
-  variable: "--font-inter",
   subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
 const interTight = Inter_Tight({
-  variable: "--font-inter-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "900"],
+  variable: "--font-inter-tight",
   display: "swap",
 });
 
-const SITE_URL = siteConfig.siteUrl;
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: siteConfig.theme.colors.primary,
+};
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} - ${siteConfig.subtitle}`,
+  metadataBase: new URL(siteConfig.siteUrl),
+  title: {
+    default: `${siteConfig.name} — ${siteConfig.subtitle}`,
+    template: `%s | ${siteConfig.name}`,
+  },
   description: siteConfig.hero.description,
-  metadataBase: new URL(SITE_URL),
+  keywords: [
+    "dental clinic",
+    "dentist",
+    "dental care",
+    "teeth whitening",
+    "dental implants",
+    "root canal",
+    "braces",
+    "orthodontics",
+    "cosmetic dentistry",
+    "Pune",
+    "Baner",
+  ],
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
   openGraph: {
-    title: `${siteConfig.name} - ${siteConfig.subtitle}`,
-    description: siteConfig.hero.description,
-    url: SITE_URL,
-    siteName: siteConfig.name,
-    locale: siteConfig.locale.replace("-", "_"),
     type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.siteUrl,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} — ${siteConfig.subtitle}`,
+    description: siteConfig.hero.description,
     images: [
       {
-        url: siteConfig.images.hero,
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} - Dental Clinic in ${siteConfig.address.locality}, ${siteConfig.address.city}`,
+        alt: `${siteConfig.name} — ${siteConfig.subtitle}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} - ${siteConfig.subtitle}`,
+    title: `${siteConfig.name} — ${siteConfig.subtitle}`,
     description: siteConfig.hero.description,
-    images: [siteConfig.images.hero],
+    images: ["/images/og-image.jpg"],
+    creator: "@smiledentalpune",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   alternates: {
-    canonical: SITE_URL,
+    canonical: siteConfig.siteUrl,
   },
 };
 
@@ -58,37 +87,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Dentist",
-        "@id": `${SITE_URL}/#dentist`,
+        "@id": `${siteConfig.siteUrl}/#dentist`,
         name: siteConfig.name,
         description: siteConfig.hero.description,
+        url: siteConfig.siteUrl,
         telephone: siteConfig.phone,
         email: siteConfig.email,
-        url: SITE_URL,
         foundingDate: siteConfig.foundingYear,
-        priceRange: "₹₹",
-        openingHours: "Mo-Sa 09:00-20:00",
-        currenciesAccepted: "INR",
-        paymentAccepted: "Cash, Credit Card, UPI",
-        areaServed: siteConfig.address.areaServed,
-        knowsAbout: [
-          "Cosmetic Dentistry",
-          "Dental Implants",
-          "Full Mouth Rehabilitation",
-          "Root Canal Treatment",
-          "Orthodontic Treatment",
-          "Pediatric Dentistry",
-          "Oral Prophylaxis",
-          "Crowns and Bridges",
-          "Dentures"
-        ],
         address: {
           "@type": "PostalAddress",
-          streetAddress: `${siteConfig.address.line1} ${siteConfig.address.line2}`,
+          streetAddress: [siteConfig.address.line1, siteConfig.address.line2].filter(Boolean).join(", "),
           addressLocality: siteConfig.address.city,
           addressRegion: siteConfig.address.state,
           postalCode: siteConfig.address.postalCode,
@@ -99,22 +112,53 @@ export default function RootLayout({
           latitude: siteConfig.address.geo.latitude,
           longitude: siteConfig.address.geo.longitude,
         },
-        hasMap: siteConfig.address.googleMapsLink,
+        areaServed: siteConfig.address.areaServed.map((area) => ({
+          "@type": "City",
+          name: area,
+        })),
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            opens: "09:00",
+            closes: "20:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Sunday",
+            opens: "10:00",
+            closes: "14:00",
+          },
+        ],
+        priceRange: "$$",
+        image: `${siteConfig.siteUrl}${siteConfig.images.logo}`,
         sameAs: [
           siteConfig.social.facebook,
           siteConfig.social.instagram,
           siteConfig.social.twitter,
         ].filter(Boolean),
+        hasMap: siteConfig.address.googleMapsLink,
+        knowsAbout: [
+          "Dental Implants",
+          "Root Canal Treatment",
+          "Teeth Whitening",
+          "Orthodontics",
+          "Cosmetic Dentistry",
+          "Pediatric Dentistry",
+        ],
       },
       {
         "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        url: SITE_URL,
+        "@id": `${siteConfig.siteUrl}/#website`,
+        url: siteConfig.siteUrl,
         name: siteConfig.name,
         description: siteConfig.hero.description,
-        inLanguage: siteConfig.locale,
-      }
-    ]
+        publisher: {
+          "@type": "Dentist",
+          "@id": `${siteConfig.siteUrl}/#dentist`,
+        },
+      },
+    ],
   };
 
   const faqSchema = {
@@ -131,33 +175,19 @@ export default function RootLayout({
   };
 
   return (
-    <html lang={siteConfig.locale}>
+    <html lang={siteConfig.locale.split("-")[0]} className={`${inter.variable} ${interTight.variable}`}>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       </head>
-      <body
-        className={`${inter.variable} ${interTight.variable} antialiased`}
-        style={
-          {
-            "--primary": siteConfig.theme.colors.primary,
-            "--secondary": siteConfig.theme.colors.secondary,
-            "--accent": siteConfig.theme.colors.accent,
-          } as React.CSSProperties
-        }
-      >
-        <SmoothScroll>
-          {children}
-          <FloatingWhatsApp />
-          <MobileStickyBar />
-          <ChatbotWidget />
-        </SmoothScroll>
+      <body className="font-sans antialiased bg-white text-secondary">
+        {children}
       </body>
     </html>
   );

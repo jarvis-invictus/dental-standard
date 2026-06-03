@@ -77,7 +77,7 @@ dental-standard/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/sahil-b-09/dental-standard.git my-clinic
+git clone https://github.com/jarvis-invictus/dental-standard.git my-clinic
 cd my-clinic
 npm install
 ```

@@ -1,5 +1,5 @@
 export const siteConfig = {
-    siteUrl: "https://dental-standard-v2.vercel.app",
+    siteUrl: "https://your-clinic-name.vercel.app",
     locale: "en-IN",
     foundingYear: "2009",
     name: "Smile Dental Clinic",

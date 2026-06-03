@@ -1,136 +1,162 @@
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
+"use client";
+
+import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter } from "lucide-react";
 
 export default function Footer() {
-    return (
-        <footer className="bg-gray-900 text-gray-300 pt-16 pb-8">
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                    {/* Brand Column */}
-                    <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <img src={siteConfig.images.logo} alt="Logo" className="h-12 w-auto bg-white rounded-lg p-1" />
-                            <div>
-                                <div
-                                    className="text-xl font-bold leading-tight font-serif tracking-wide"
-                                    style={{ color: siteConfig.theme.colors.primary }}
-                                >
-                                    {siteConfig.name}
-                                </div>
-                                <div
-                                    className="text-xs font-bold tracking-widest uppercase text-gray-400"
-                                >
-                                    {siteConfig.subtitle}
-                                </div>
-                            </div>
-                        </div>
-                        <p className="mb-6 text-gray-400">
-                            Dental care for families in Baner, Pune. Digital X-rays, implants, cosmetic dentistry, and
-                            painless root canals. Walk-ins welcome.
-                        </p>
-                        <div className="flex gap-4">
-                            <a href={siteConfig.social.facebook} aria-label="Facebook" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:opacity-80 cursor-pointer transition-colors text-white" style={{ backgroundColor: undefined }}>
-                                <Facebook className="w-5 h-5" />
-                            </a>
-                            <a href={siteConfig.social.instagram} aria-label="Instagram" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:opacity-80 cursor-pointer transition-colors text-white" style={{ backgroundColor: undefined }}>
-                                <Instagram className="w-5 h-5" />
-                            </a>
-                            <a href={siteConfig.social.twitter} aria-label="Twitter" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:opacity-80 cursor-pointer transition-colors text-white" style={{ backgroundColor: undefined }}>
-                                <Twitter className="w-5 h-5" />
-                            </a>
-                        </div>
-                    </div>
-
-                    {/* Quick Links */}
-                    <div>
-                        <h4 className="text-lg font-bold text-white mb-6">Quick Links</h4>
-                        <ul className="space-y-3">
-                            <li><a href="#home" className="hover:text-white transition-colors">Home</a></li>
-                            <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
-                            <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
-                            <li><a href={siteConfig.social.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Contact</a></li>
-                        </ul>
-                    </div>
-
-                    {/* Contact Info */}
-                    <div>
-                        <h4 className="text-lg font-bold text-white mb-6">Contact Us</h4>
-                        <ul className="space-y-4">
-                            <li className="flex gap-3">
-                                <MapPin
-                                    className="w-5 h-5 shrink-0"
-                                    style={{ color: siteConfig.theme.colors.primary }}
-                                />
-                                <a
-                                    href={siteConfig.address.googleMapsLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="hover:text-white transition-colors"
-                                >
-                                    {siteConfig.address.line1}<br />
-                                    {siteConfig.address.line2}<br />
-                                    {siteConfig.address.line3}
-                                </a>
-                            </li>
-                            <li className="flex gap-3 items-start">
-                                <Phone
-                                    className="w-5 h-5 shrink-0 mt-1"
-                                    style={{ color: siteConfig.theme.colors.primary }}
-                                />
-                                <div className="flex flex-col gap-1">
-                                    <a href={`tel:${siteConfig.phone.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{siteConfig.phone}</a>
-                                    {siteConfig.phoneSecondary && (
-                                        <a href={`tel:${siteConfig.phoneSecondary.replace(/\s/g, "")}`} className="hover:text-white transition-colors">{siteConfig.phoneSecondary}</a>
-                                    )}
-                                </div>
-                            </li>
-                            <li className="flex gap-3 items-center">
-                                <Mail
-                                    className="w-5 h-5 shrink-0"
-                                    style={{ color: siteConfig.theme.colors.primary }}
-                                />
-                                <a href={`mailto:${siteConfig.email}`} className="hover:text-white transition-colors">{siteConfig.email}</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Map */}
-                    <div>
-                        <h4 className="text-lg font-bold text-white mb-6">Location</h4>
-                        <div className="rounded-xl overflow-hidden h-[300px] border border-gray-700 shadow-lg relative z-10 group cursor-pointer">
-                            <iframe
-                                src={siteConfig.address.mapEmbedUrl}
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0, pointerEvents: "none" }}
-                                allowFullScreen={true}
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                className="grayscale group-hover:grayscale-0 transition-all duration-500 w-full h-full"
-                            ></iframe>
-                            <a
-                                href={siteConfig.address.googleMapsLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="absolute inset-0 z-20 flex items-center justify-center bg-transparent"
-                                aria-label="View on Google Maps"
-                            >
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm space-y-2">
-                    <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All Rights Reserved. | Powered by <a href="https://invictus-ai.in" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">Invictus AI</a></p>
-                    <div className="flex items-center justify-center gap-4 text-gray-600 text-xs">
-                        <a href="/privacy-policy" className="hover:text-gray-300 transition-colors">Privacy Policy</a>
-                        <span>·</span>
-                        <a href="/terms-of-service" className="hover:text-gray-300 transition-colors">Terms of Service</a>
-                        <span>·</span>
-                        <a href="/disclaimer" className="hover:text-gray-300 transition-colors">Disclaimer</a>
-                    </div>
-                </div>
+  return (
+    <footer className="bg-secondary text-white py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold">{siteConfig.name}</h3>
+            <p className="text-gray-400 text-sm">
+              {siteConfig.subtitle}
+            </p>
+            <div className="flex gap-4">
+              <a
+                href={siteConfig.social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href={siteConfig.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href={siteConfig.social.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
             </div>
-        </footer>
-    );
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-bold mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li>
+                <Link href="/" className="hover:text-primary transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="#services" className="hover:text-primary transition-colors">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link href="#about" className="hover:text-primary transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="#testimonials" className="hover:text-primary transition-colors">
+                  Reviews
+                </Link>
+              </li>
+              <li>
+                <Link href="#contact" className="hover:text-primary transition-colors">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 className="font-bold mb-4">Services</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li>
+                <Link href="/services/general-dentistry" className="hover:text-primary transition-colors">
+                  General Dentistry
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/dental-implants" className="hover:text-primary transition-colors">
+                  Dental Implants
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/orthodontics" className="hover:text-primary transition-colors">
+                  Orthodontics
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/cosmetic-dentistry" className="hover:text-primary transition-colors">
+                  Cosmetic Dentistry
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/kids-dentistry" className="hover:text-primary transition-colors">
+                  Kids Dentistry
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-bold mb-4">Contact</h4>
+            <ul className="space-y-3 text-gray-400">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <span>
+                  {siteConfig.address.line1}<br />
+                  {siteConfig.address.line2}<br />
+                  {siteConfig.address.line3}
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                <a href={`tel:${siteConfig.phone}`} className="hover:text-primary transition-colors">
+                  {siteConfig.phone}
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                <a href={`mailto:${siteConfig.email}`} className="hover:text-primary transition-colors">
+                  {siteConfig.email}
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <span>{siteConfig.timing}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-400 text-sm">
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm text-gray-400">
+            <Link href="/privacy-policy" className="hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-primary transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/disclaimer" className="hover:text-primary transition-colors">
+              Disclaimer
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

@@ -1,207 +1,119 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
+import { MapPin, Clock, Phone } from "lucide-react";
 
 export default function Hero() {
+  return (
+    <section className="relative min-h-screen pt-20 overflow-hidden bg-gradient-to-br from-gray-50 to-white">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl" />
+      </div>
 
-    return (
-        <section id="home" className="relative w-full min-h-[800px] bg-[#F8F8F8] overflow-hidden flex items-center">
-            {/* Subtle top-right mint corner wash — very light, matches reference */}
-            <div className="absolute top-0 right-0 w-[55%] h-full bg-gradient-to-bl from-teal-100/50 via-cyan-50/20 to-transparent pointer-events-none z-[-1]" />
-
-            <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 py-20 lg:py-0">
-                {/* Text Content */}
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="max-w-xl"
-                >
-                    <span
-                        className="uppercase tracking-[0.2em] text-sm font-bold mb-4 block"
-                        style={{ color: siteConfig.theme.colors.primary }}
-                    >
-                        {siteConfig.hero.tagline}
-                    </span>
-                    <h1 className="text-5xl md:text-6xl font-bold leading-[1.1] mb-6 font-serif text-gray-900">
-                        {siteConfig.hero.headingLine1}
-                        <br />
-                        <span style={{ color: siteConfig.theme.colors.primary }}>
-                            {siteConfig.hero.headingLine2}
-                        </span>
-                    </h1>
-                    <p className="text-gray-600 text-lg mb-10 leading-relaxed max-w-md">
-                        {siteConfig.hero.description}
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                        <a
-                            href="#appointment"
-                            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white font-bold text-lg shadow-lg hover:opacity-90 transition-all hover:scale-105"
-                            style={{ background: "linear-gradient(90deg, #09E0A7 0%, #0DC6FF 100%)" }}
-                        >
-                            Book Appointment
-                        </a>
-                    </div>
-
-                    {/* Trusted by patients — avatar pill widget */}
-                    <div className="mt-10 inline-flex items-center gap-3 bg-white border border-gray-100 rounded-full px-4 py-2 shadow-md">
-                        <div className="flex items-center">
-                            <img src="https://images.unsplash.com/photo-1621887348744-6b0444f8a058?w=40&h=40&fit=crop&crop=face" className="w-8 h-8 rounded-full ring-2 ring-white object-cover" alt="patient" />
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" className="w-8 h-8 rounded-full ring-2 ring-white object-cover -ml-2" alt="patient" />
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=40&h=40&fit=crop&crop=face" className="w-8 h-8 rounded-full ring-2 ring-white object-cover -ml-2" alt="patient" />
-                            <img src="https://images.unsplash.com/photo-1546961342-ea5f62d5a27b?w=40&h=40&fit=crop&crop=face" className="w-8 h-8 rounded-full ring-2 ring-white object-cover -ml-2" alt="patient" />
-                        </div>
-                        <p className="text-sm text-gray-500">
-                            Trusted by <strong className="text-gray-800 font-semibold">500+</strong> patients
-                        </p>
-                    </div>
-                </motion.div>
-
-                {/* Image Content */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative w-full flex justify-center items-center py-10"
-                >
-                    {/* Outer positioning container — wider to accommodate infinity loop */}
-                    <div className="relative w-[380px] lg:w-[460px] aspect-square">
-
-                        {/* Orbital rings: two ellipses at different angles, dotted + animated, behind image */}
-                        <svg
-                            className="absolute"
-                            style={{
-                                top: "50%",
-                                left: "50%",
-                                transform: "translate(-50%, -50%)",
-                                width: "145%",
-                                height: "145%",
-                                zIndex: 0,
-                                pointerEvents: "none"
-                            }}
-                            viewBox="0 0 400 400"
-                            fill="none"
-                        >
-                            <defs>
-                                <style>{`
-                                    @keyframes orbitA {
-                                        from { stroke-dashoffset: 0; }
-                                        to   { stroke-dashoffset: -100; }
-                                    }
-                                    @keyframes orbitB {
-                                        from { stroke-dashoffset: 0; }
-                                        to   { stroke-dashoffset: 100; }
-                                    }
-                                    .ring-a { animation: orbitA 4s linear infinite; }
-                                    .ring-b { animation: orbitB 6s linear infinite; }
-                                `}</style>
-                            </defs>
-
-                            {/* Ring A — green, steep diagonal top-left to bottom-right (-45°) */}
-                            <ellipse
-                                cx="200" cy="200" rx="190" ry="55"
-                                stroke="#09E0A7"
-                                strokeWidth="1.5"
-                                fill="none"
-                                strokeDasharray="8 10"
-                                strokeLinecap="round"
-                                opacity="0.2"
-                                transform="rotate(-45, 200, 200)"
-                            />
-                            <ellipse
-                                className="ring-b"
-                                cx="200" cy="200" rx="190" ry="55"
-                                stroke="#09E0A7"
-                                strokeWidth="2.5"
-                                fill="none"
-                                strokeDasharray="6 37"
-                                strokeLinecap="round"
-                                opacity="0.65"
-                                transform="rotate(-45, 200, 200)"
-                            />
-
-                            {/* Ring B — cyan, steep diagonal top-right to bottom-left (+45°) */}
-                            <ellipse
-                                cx="200" cy="200" rx="190" ry="55"
-                                stroke="#0DC6FF"
-                                strokeWidth="1.5"
-                                fill="none"
-                                strokeDasharray="8 10"
-                                strokeLinecap="round"
-                                opacity="0.2"
-                                transform="rotate(45, 200, 200)"
-                            />
-                            <ellipse
-                                className="ring-a"
-                                cx="200" cy="200" rx="190" ry="55"
-                                stroke="#0DC6FF"
-                                strokeWidth="2.5"
-                                fill="none"
-                                strokeDasharray="6 37"
-                                strokeLinecap="round"
-                                opacity="0.6"
-                                transform="rotate(45, 200, 200)"
-                            />
-                        </svg>
-
-                        {/* Gradient ring: conic-gradient border */}
-                        <div
-                            className="absolute rounded-full"
-                            style={{
-                                inset: "-3px",
-                                background: "conic-gradient(from 180deg, #09E0A7 0deg, #0DC6FF 180deg, #09E0A7 360deg)",
-                                zIndex: 1,
-                                padding: "6px",
-                                boxShadow: "0 0 24px 2px rgba(9,224,167,0.15), 0 0 24px 2px rgba(13,198,255,0.15)"
-                            }}
-                        >
-                            <div className="w-full h-full rounded-full bg-white" />
-                        </div>
-
-                        {/* Main portrait */}
-                        <div className="absolute rounded-full overflow-hidden" style={{ inset: "9px", zIndex: 2 }}>
-                            <img
-                                src={siteConfig.images.hero}
-                                alt="Patient with beautiful smile at Smile Dental Clinic"
-                                className="w-full h-full object-cover object-top"
-                            />
-                        </div>
-
-                        {/* Icon 1: teeth.webp (simple tooth) — top-left, further out */}
-                        <motion.img
-                            src="/images/teeth.webp"
-                            alt="Happy teeth"
-                            className="absolute w-24 h-24 object-contain drop-shadow-xl"
-                            style={{ top: "-18%", left: "-14%", zIndex: 10 }}
-                            initial={{ opacity: 0, scale: 0.5 }}
-                            animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
-                            transition={{
-                                opacity: { delay: 0.9, duration: 0.5 },
-                                scale: { delay: 0.9, duration: 0.5 },
-                                y: { delay: 1.4, duration: 3, repeat: Infinity, ease: "easeInOut" }
-                            }}
-                        />
-
-                        {/* Icon 2: teethmoving.webp (character tooth) — bottom-right, further out */}
-                        <motion.img
-                            src="/images/teethmoving.webp"
-                            alt="Healthy teeth"
-                            className="absolute w-24 h-24 object-contain drop-shadow-xl"
-                            style={{ bottom: "-18%", right: "-14%", zIndex: 10 }}
-                            initial={{ opacity: 0, scale: 0.5 }}
-                            animate={{ opacity: 1, scale: 1, y: [0, 8, 0] }}
-                            transition={{
-                                opacity: { delay: 1.1, duration: 0.5 },
-                                scale: { delay: 1.1, duration: 0.5 },
-                                y: { delay: 1.6, duration: 3.5, repeat: Infinity, ease: "easeInOut" }
-                            }}
-                        />
-                    </div>
-                </motion.div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left content */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+              <MapPin className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-secondary">
+                {siteConfig.hero.tagline}
+              </span>
             </div>
-        </section>
-    );
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary leading-tight">
+              {siteConfig.hero.headingLine1}
+              <br />
+              <span className="text-primary">{siteConfig.hero.headingLine2}</span>
+            </h1>
+
+            <p className="text-lg text-gray-600 max-w-lg">
+              {siteConfig.hero.description}
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <a
+                href={siteConfig.social.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-secondary font-bold rounded-full hover:bg-primary/90 transition-colors shadow-lg shadow-primary/25"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                Book Appointment
+              </a>
+              <Link
+                href="#services"
+                className="inline-flex items-center gap-2 px-8 py-4 border-2 border-secondary text-secondary font-bold rounded-full hover:bg-secondary hover:text-white transition-colors"
+              >
+                Our Services
+              </Link>
+            </div>
+
+            {/* Quick info */}
+            <div className="flex flex-wrap gap-6 pt-4 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-primary" />
+                {siteConfig.timing}
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-primary" />
+                {siteConfig.phone}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative"
+          >
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+              <Image
+                src={siteConfig.images.hero}
+                alt="Dental care at Smile Dental Clinic"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+
+            {/* Floating trust badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-4"
+            >
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white"
+                  />
+                ))}
+              </div>
+              <div>
+                <div className="font-bold text-secondary">2000+</div>
+                <div className="text-sm text-gray-500">Happy Patients</div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 }
